@@ -30,13 +30,13 @@ body {
 
 /* Scrollbar */
 ::-webkit-scrollbar {
-  width: 4px;
+  width: 3px;
 }
 ::-webkit-scrollbar-track {
   background: #0A0A0F;
 }
 ::-webkit-scrollbar-thumb {
-  background: #2A2A3A;
+  background: linear-gradient(to bottom, #4c1d95, #2A2A3A);
   border-radius: 2px;
 }
 
@@ -45,3 +45,10 @@ body {
   background: rgba(124, 58, 237, 0.35);
   color: #fff;
 }
+
+/* Cursor piscante para elementos tipo terminal */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+

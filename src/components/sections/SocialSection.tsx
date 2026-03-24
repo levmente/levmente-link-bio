@@ -1,6 +1,7 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { motion, useInView } from 'framer-motion'
+import { useRef } from 'react'
 
 const socials = [
   {
@@ -33,23 +34,34 @@ const socials = [
 ]
 
 export default function SocialSection() {
+  const ref = useRef<HTMLElement>(null)
+  const isInView = useInView(ref, { once: true, amount: 0.3 })
+
   return (
-    <footer className="w-full max-w-md mx-auto px-4 py-12 border-t border-white/5">
+    <footer ref={ref} className="w-full max-w-md mx-auto px-4 py-8">
       <div className="flex flex-col items-center gap-6">
         {/* Brand */}
-        <div className="text-center">
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          className="text-center"
+        >
           <p className="text-sm font-semibold text-white">Julio Giani</p>
           <p className="text-xs text-zinc-600">LevMente</p>
-        </div>
+        </motion.div>
 
         {/* Social links */}
         <div className="flex items-center gap-4">
-          {socials.map((social) => (
+          {socials.map((social, i) => (
             <motion.a
               key={social.name}
               href={social.href}
               aria-label={social.name}
               className="w-10 h-10 rounded-full border border-white/10 bg-white/[0.03] flex items-center justify-center text-zinc-500 hover:text-violet-300 hover:border-violet-500/40 hover:bg-violet-500/10 transition-all duration-200"
+              initial={{ opacity: 0, y: 12, scale: 0.9 }}
+              animate={isInView ? { opacity: 1, y: 0, scale: 1 } : {}}
+              transition={{ duration: 0.45, delay: 0.1 + i * 0.08, ease: [0.22, 1, 0.36, 1] }}
               whileHover={{ scale: 1.1, y: -2 }}
               whileTap={{ scale: 0.95 }}
             >

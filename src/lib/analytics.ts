@@ -118,3 +118,9 @@ export function trackWaitlistSubmitted() {
   if (!isReady()) return
   capture('waitlist_submitted')
 }
+
+/** Falha ao submeter o email na lista de espera. */
+export function trackWaitlistSubmitFailed() {
+  if (!isReady()) return
+  capture('waitlist_submit_failed')
+}
