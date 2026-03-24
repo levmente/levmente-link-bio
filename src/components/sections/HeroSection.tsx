@@ -1,32 +1,10 @@
 'use client'
 
-import { useRef } from 'react'
-import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'framer-motion'
+import { motion, useTransform, useMotionValue, useSpring } from 'framer-motion'
 import GlowButton from '@/components/ui/GlowButton'
-import { ArrowDown } from 'lucide-react'
 import { trackHeroCtaClicked } from '@/lib/analytics'
 
 export default function HeroSection({ onNext }: { onNext?: () => void }) {
-  const heroRef = useRef<HTMLElement>(null)
-
-  // ── Scroll-driven depth ──────────────────────────────────────────────────
-  // Progress: 0 = hero top alinhado com viewport top; 1 = hero saiu completamente
-  const { scrollYProgress } = useScroll({
-    target: heroRef,
-    offset: ['start start', 'end start'],
-  })
-
-  // BG layer — recua forte: fica muito para trás, encolhe, desvanece
-  const bgY       = useTransform(scrollYProgress, [0, 1], ['0%', '48%'])
-  const bgScale   = useTransform(scrollYProgress, [0, 1], [1, 0.78])
-  const bgOpacity = useTransform(scrollYProgress, [0, 1], [1, 1])
-
-  // MG layer — badge + avatar: leve lag (fica levemente para trás)
-  const mgY = useTransform(scrollYProgress, [0, 1], ['0%', '8%'])
-
-  // FG layer — headline + CTA: quase fixo (cola na câmera)
-  const fgY = useTransform(scrollYProgress, [0, 1], ['0%', '-2%'])
-
   // ── Mouse tracking (desktop) ─────────────────────────────────────────────
   const mouseX = useMotionValue(0)
   const mouseY = useMotionValue(0)
@@ -45,7 +23,7 @@ export default function HeroSection({ onNext }: { onNext?: () => void }) {
 
   const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
     const rect = e.currentTarget.getBoundingClientRect()
-    mouseX.set((e.clientX - rect.left) / rect.width - 0.5)   // -0.5 a +0.5
+    mouseX.set((e.clientX - rect.left) / rect.width - 0.5)
     mouseY.set((e.clientY - rect.top) / rect.height - 0.5)
   }
   const handleMouseLeave = () => {
@@ -64,24 +42,18 @@ export default function HeroSection({ onNext }: { onNext?: () => void }) {
 
   return (
     <section
-      ref={heroRef}
-      className="relative min-h-svh flex flex-col items-center justify-center px-4 pt-12 pb-16"
+      className="relative h-full w-full flex flex-col items-center justify-center px-4 pt-12 pb-16"
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     >
 
-      {/* ── BG layer: orbs + grid — recua e encolhe no scroll ─────────────── */}
-      <motion.div
-        className="absolute inset-0 pointer-events-none"
-        style={{ y: bgY, scale: bgScale, opacity: bgOpacity }}
-      >
-        {/* Orb principal — luz ambiente suave, não domina o Hero */}
+      {/* ── BG layer: orbs + grid ────────────────────────────────────────── */}
+      <div className="absolute inset-0 pointer-events-none">
         <motion.div
           animate={{ scale: [1, 1.12, 1], opacity: [0.04, 0.07, 0.04] }}
           transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
           className="absolute top-[-20%] left-1/2 -translate-x-1/2 w-[500px] h-[500px] rounded-full bg-violet-600 blur-[120px]"
         />
-        {/* Orbs laterais — presença sutil, sangram para seções seguintes */}
         <motion.div
           animate={{ scale: [1, 1.1, 1], opacity: [0.03, 0.06, 0.03] }}
           transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut', delay: 1.5 }}
@@ -92,7 +64,6 @@ export default function HeroSection({ onNext }: { onNext?: () => void }) {
           transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut', delay: 3 }}
           className="absolute bottom-[15%] left-[-5%] w-[240px] h-[240px] rounded-full bg-violet-900 blur-[80px]"
         />
-        {/* Grid de perspectiva 3D (floor grid) — mesma intensidade do corredor */}
         <div className="absolute bottom-0 inset-x-0 h-[52%]">
           <div
             style={{
@@ -110,14 +81,13 @@ export default function HeroSection({ onNext }: { onNext?: () => void }) {
             }}
           />
         </div>
-      </motion.div>
+      </div>
 
       {/* ── Corner HUD brackets ─────────────────────────────────────────────── */}
       <div className="absolute top-5 left-4 w-7 h-7 border-t border-l border-violet-400/30 pointer-events-none" />
       <div className="absolute top-5 right-4 w-7 h-7 border-t border-r border-violet-400/30 pointer-events-none" />
       <div className="absolute bottom-10 left-4 w-7 h-7 border-b border-l border-violet-400/20 pointer-events-none" />
       <div className="absolute bottom-10 right-4 w-7 h-7 border-b border-r border-violet-400/20 pointer-events-none" />
-
 
       {/* ── Conteúdo (camadas em profundidade) ──────────────────────────────── */}
       <motion.div
@@ -128,8 +98,8 @@ export default function HeroSection({ onNext }: { onNext?: () => void }) {
         className="relative z-10 flex flex-col items-center text-center max-w-sm mx-auto gap-6 w-full"
       >
 
-        {/* ── MG layer: badge + avatar — scroll -6%, mouse ±8px + tilt 3D ── */}
-        <motion.div style={{ y: mgY }} className="flex flex-col items-center gap-6">
+        {/* ── MG layer: badge + avatar — mouse ±8px + tilt 3D ── */}
+        <div className="flex flex-col items-center gap-6">
           <motion.div
             style={{
               y: mgMouseY,
@@ -164,7 +134,6 @@ export default function HeroSection({ onNext }: { onNext?: () => void }) {
               transition={{ duration: 0.55, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
               className="relative"
             >
-              {/* Core do avatar */}
               <div className="w-20 h-20 rounded-full border-2 border-violet-500/40 bg-violet-500/10 flex items-center justify-center shadow-[0_0_40px_rgba(124,58,237,0.35)]">
                 <span className="text-3xl">🧠</span>
               </div>
@@ -205,64 +174,46 @@ export default function HeroSection({ onNext }: { onNext?: () => void }) {
               </div>
             </motion.div>
           </motion.div>
-        </motion.div>
+        </div>
 
-        {/* ── FG layer: headline + CTA — scroll -14%, mouse ±3px ─────────── */}
-        <motion.div style={{ y: fgY }} className="flex flex-col items-center gap-6 w-full">
-          <motion.div
-            style={{ y: fgMouseY, x: fgMouseX }}
-            className="flex flex-col items-center gap-6 w-full"
-          >
-            {/* Headline */}
-            <motion.div
-              initial={{ opacity: 0, y: 24, scale: 0.95, rotateX: 4 }}
-              animate={{ opacity: 1, y: 0, scale: 1, rotateX: 0 }}
-              transition={{ duration: 0.65, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-              style={{ transformPerspective: 900 }}
-              className="space-y-3"
-            >
-              <h1 className="text-3xl font-extrabold text-white leading-tight tracking-tight">
-                O problema nunca foi{' '}
-                <span className="text-violet-400 drop-shadow-[0_0_24px_rgba(167,139,250,0.7)]">
-                  falta de disciplina.
-                </span>
-                <br />
-                Foi você tentando viver com um cérebro que ninguém te ensinou a usar.
-              </h1>
-              <p className="text-sm text-zinc-400 leading-relaxed">
-                Se você tem TDAH — ou suspeita que tem — e já se sentiu burro, preguiçoso ou
-                incapaz: isso não é verdade. E eu vou te mostrar por quê.
-              </p>
-            </motion.div>
-
-            {/* CTA */}
-            <motion.div
-              initial={{ opacity: 0, y: 20, scale: 0.96 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{ duration: 0.5, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
-              className="flex flex-col items-center gap-3 w-full"
-            >
-              <GlowButton onClick={scrollToDiagnostic} className="w-full max-w-xs text-base py-3.5">
-                Quero entender minha mente
-              </GlowButton>
-              <p className="text-xs text-zinc-600">Diagnóstico gratuito · 2 minutos</p>
-            </motion.div>
-          </motion.div>
-        </motion.div>
-
-        {/* Scroll indicator */}
+        {/* ── FG layer: headline + CTA — mouse ±2px ─────────── */}
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.8 }}
-          className="absolute bottom-6 left-1/2 -translate-x-1/2"
+          style={{ y: fgMouseY, x: fgMouseX }}
+          className="flex flex-col items-center gap-6 w-full"
         >
+          {/* Headline */}
           <motion.div
-            animate={{ y: [0, 6, 0] }}
-            transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
-            className="text-zinc-600"
+            initial={{ opacity: 0, y: 24, scale: 0.95, rotateX: 4 }}
+            animate={{ opacity: 1, y: 0, scale: 1, rotateX: 0 }}
+            transition={{ duration: 0.65, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+            style={{ transformPerspective: 900 }}
+            className="space-y-3"
           >
-            <ArrowDown size={16} />
+            <h1 className="text-3xl font-extrabold text-white leading-tight tracking-tight">
+              O problema nunca foi{' '}
+              <span className="text-violet-400 drop-shadow-[0_0_24px_rgba(167,139,250,0.7)]">
+                falta de disciplina.
+              </span>
+              <br />
+              Foi você tentando viver com um cérebro que ninguém te ensinou a usar.
+            </h1>
+            <p className="text-sm text-zinc-400 leading-relaxed">
+              Se você tem TDAH — ou suspeita que tem — e já se sentiu burro, preguiçoso ou
+              incapaz: isso não é verdade. E eu vou te mostrar por quê.
+            </p>
+          </motion.div>
+
+          {/* CTA */}
+          <motion.div
+            initial={{ opacity: 0, y: 20, scale: 0.96 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 0.5, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
+            className="flex flex-col items-center gap-3 w-full"
+          >
+            <GlowButton onClick={scrollToDiagnostic} className="w-full max-w-xs text-base py-3.5">
+              Quero entender minha mente
+            </GlowButton>
+            <p className="text-xs text-zinc-600">Diagnóstico gratuito · 2 minutos</p>
           </motion.div>
         </motion.div>
 

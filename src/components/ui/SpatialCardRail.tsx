@@ -394,6 +394,9 @@ export default function SpatialCardRail({ items, scrollToRef }: Props) {
   // No X component → zero lateral noise.
   const floorY = useTransform(cameraZ, (z: number) => `0px ${z * 0.12}px`)
 
+  // Scroll indicator: visible at rest, fades out as soon as the user starts scrolling
+  const scrollIndicatorOpacity = useTransform(scrollYProgress, [0, 0.015], [1, 0])
+
   // ── ScrollTo imperative handle ──────────────────────────────────────────────
   useEffect(() => {
     if (!scrollToRef) return
@@ -457,6 +460,23 @@ export default function SpatialCardRail({ items, scrollToRef }: Props) {
           )}
         </div>
 
+        {/* ── Scroll indicator ─────────────────────────────────────────────── */}
+        <motion.div
+          style={{
+            opacity: scrollIndicatorOpacity,
+            bottom: 'calc(1.5rem + env(safe-area-inset-bottom, 0px))',
+          }}
+          className="absolute left-1/2 -translate-x-1/2 pointer-events-none flex flex-col items-center gap-1"
+        >
+          <span className="text-sm text-white/70 tracking-wide">Role para continuar</span>
+          <motion.span
+            animate={{ y: [0, 6, 0] }}
+            transition={{ repeat: Infinity, duration: 1.6, ease: 'easeInOut' }}
+            className="text-base text-white/80"
+          >
+            ↓
+          </motion.span>
+        </motion.div>
 
       </motion.div>
     </div>

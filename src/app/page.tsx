@@ -5,15 +5,17 @@ import { DiagnosticState, DiagnosticResult } from '@/lib/types'
 import { getResult } from '@/lib/diagnostic'
 import { trackPageEntered } from '@/lib/analytics'
 
+import dynamic from 'next/dynamic'
 import SpatialCardRail, { RailItem } from '@/components/ui/SpatialCardRail'
 import HeroSection from '@/components/sections/HeroSection'
 import DiagnosticSection from '@/components/sections/DiagnosticSection'
-import ConfessionSection from '@/components/sections/ConfessionSection'
-import ResultSection from '@/components/sections/ResultSection'
-import ProductsSection from '@/components/sections/ProductsSection'
-import WaitlistSection from '@/components/sections/WaitlistSection'
-import SocialSection from '@/components/sections/SocialSection'
 import { makePainItems } from '@/components/sections/PainSection'
+
+const ConfessionSection = dynamic(() => import('@/components/sections/ConfessionSection'))
+const ResultSection     = dynamic(() => import('@/components/sections/ResultSection'))
+const ProductsSection   = dynamic(() => import('@/components/sections/ProductsSection'))
+const WaitlistSection   = dynamic(() => import('@/components/sections/WaitlistSection'))
+const SocialSection     = dynamic(() => import('@/components/sections/SocialSection'))
 
 // ─── Flow state ───────────────────────────────────────────────────────────────
 

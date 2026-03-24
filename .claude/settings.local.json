@@ -7,7 +7,11 @@
       "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000)",
       "Bash(npx tsc:*)",
       "Bash(node -e \":*)",
-      "Bash(node -e \"const pkg = require\\(''./node_modules/framer-motion/package.json''\\); console.log\\(pkg.version\\)\")"
+      "Bash(node -e \"const pkg = require\\(''./node_modules/framer-motion/package.json''\\); console.log\\(pkg.version\\)\")",
+      "Bash(grep -r dynamic c:/Users/Cliente/Desktop/link-bio-inovador/node_modules/next/dist/docs/01-app/03-api-reference/ --include=*.md -l)",
+      "Bash(find c:/Users/Cliente/Desktop/link-bio-inovador/node_modules/next/dist/docs/ -name *dynamic*)",
+      "Bash(grep -r \"next/dynamic\\\\|lazy.*import\\\\|Suspense\" c:/Users/Cliente/Desktop/link-bio-inovador/node_modules/next/dist/docs/ --include=*.md -l)",
+      "Bash(grep -r next/dynamic c:/Users/Cliente/Desktop/link-bio-inovador/node_modules/next/dist/docs/ --include=*.md -l)"
     ]
   }
 }
