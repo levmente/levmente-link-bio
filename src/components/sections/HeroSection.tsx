@@ -91,9 +91,9 @@ export default function HeroSection({ onNext }: { onNext?: () => void }) {
 
       {/* ── Conteúdo (camadas em profundidade) ──────────────────────────────── */}
       <motion.div
-        initial={{ opacity: 0, y: 80, scale: 0.78, rotateX: 14 }}
+        initial={{ opacity: 0, y: 24, scale: 0.94, rotateX: 6 }}
         animate={{ opacity: 1, y: 0, scale: 1, rotateX: 0 }}
-        transition={{ duration: 1.0, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
         style={{ transformPerspective: 1600, transformOrigin: 'center center' }}
         className="relative z-10 flex flex-col items-center text-center max-w-sm mx-auto gap-6 w-full"
       >
@@ -112,9 +112,9 @@ export default function HeroSection({ onNext }: { onNext?: () => void }) {
           >
             {/* Badge — chip flutuante */}
             <motion.div
-              initial={{ opacity: 0, y: 16, scale: 0.96 }}
+              initial={{ opacity: 0, y: 10, scale: 0.97 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
             >
               <motion.span
                 animate={{ y: [0, -3, 0] }}
@@ -129,9 +129,9 @@ export default function HeroSection({ onNext }: { onNext?: () => void }) {
 
             {/* Avatar */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.8, y: 12 }}
+              initial={{ opacity: 0, scale: 0.9, y: 8 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              transition={{ duration: 0.55, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: 0.3, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
               className="relative"
             >
               <div className="w-20 h-20 rounded-full border-2 border-violet-500/40 bg-violet-500/10 flex items-center justify-center shadow-[0_0_40px_rgba(124,58,237,0.35)]">
@@ -183,9 +183,9 @@ export default function HeroSection({ onNext }: { onNext?: () => void }) {
         >
           {/* Headline */}
           <motion.div
-            initial={{ opacity: 0, y: 24, scale: 0.95, rotateX: 4 }}
+            initial={{ opacity: 0, y: 14, scale: 0.97, rotateX: 3 }}
             animate={{ opacity: 1, y: 0, scale: 1, rotateX: 0 }}
-            transition={{ duration: 0.65, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.3, delay: 0.14, ease: [0.22, 1, 0.36, 1] }}
             style={{ transformPerspective: 900 }}
             className="space-y-3"
           >
@@ -205,9 +205,9 @@ export default function HeroSection({ onNext }: { onNext?: () => void }) {
 
           {/* CTA */}
           <motion.div
-            initial={{ opacity: 0, y: 20, scale: 0.96 }}
+            initial={{ opacity: 0, y: 10, scale: 0.97 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ duration: 0.5, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.28, delay: 0.22, ease: [0.22, 1, 0.36, 1] }}
             className="flex flex-col items-center gap-3 w-full"
           >
             <GlowButton onClick={scrollToDiagnostic} className="w-full max-w-xs text-base py-3.5">

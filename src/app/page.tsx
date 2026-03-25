@@ -88,7 +88,7 @@ export default function Home() {
     {
       type: 'section',
       id: 'diagnostic',
-      scrollVh: 35,
+      scrollVh: 25,
       content: <DiagnosticSection onComplete={handleDiagnosticComplete} />,
     },
 
@@ -119,28 +119,28 @@ export default function Home() {
     // Products A (index 11) — entry: Ebook + Desafio
     {
       type: 'section',
-      scrollVh: 65,
+      scrollVh: 25,
       content: <ProductsSection slice="entry" />,
     },
 
     // Products B (index 12) — premium: Curso + Mentorias
     {
       type: 'section',
-      scrollVh: 65,
+      scrollVh: 25,
       content: <ProductsSection slice="premium" />,
     },
 
     // Waitlist (index 13)
     {
       type: 'section',
-      scrollVh: 55,
+      scrollVh: 25,
       content: <WaitlistSection />,
     },
 
     // Social (index 14)
     {
       type: 'section',
-      scrollVh: 45,
+      scrollVh: 18,
       content: <SocialSection />,
     },
   ]

@@ -37,7 +37,7 @@ const STEP_Z        = 360
 const PERSP         = 900   // cards — standard depth
 const PERSP_SECTION = 200   // sections — aggressive depth compression (52%→100% growth)
 const X_DRIFT       = 40
-const DEFAULT_CARD_VH    = 50   // vh per card (dwell window)
+const DEFAULT_CARD_VH    = 10   // vh per card (dwell window)
 const DEFAULT_SECTION_VH = 200  // vh per section — fallback only, normally set per-item
 const TRANSITION_VH      = 14   // vh for camera transition between items
 
