@@ -74,10 +74,10 @@ export default function Home() {
 
   const railItems: RailItem[] = [
 
-    // Hero (index 0) — focal at page load, no scroll needed
+    // Hero (index 0) — scrollVh: 10 → câmera começa a avançar em ~10vh (sem zona morta)
     {
       type: 'section',
-      scrollVh: 80,
+      scrollVh: 10,
       content: <HeroSection onNext={() => scrollToRef.current?.(IDX_FIRST_PAIN)} />,
     },
 
@@ -88,14 +88,14 @@ export default function Home() {
     {
       type: 'section',
       id: 'diagnostic',
-      scrollVh: 50,
+      scrollVh: 35,
       content: <DiagnosticSection onComplete={handleDiagnosticComplete} />,
     },
 
-    // Confession (index 9) — A1: invisible until diagnostic done
+    // Confession (index 9) — A1: invisible until diagnostic done — fast lane
     {
       type: 'section',
-      scrollVh: 22,
+      scrollVh: 6,
       active: flowStage !== 'idle',
       content: diagnosticState ? (
         <ConfessionSection
@@ -105,11 +105,11 @@ export default function Home() {
       ) : null,
     },
 
-    // Result (index 10) — A1: invisible until confession done
+    // Result (index 10) — A1: invisible until confession done — fast lane
     {
       type: 'section',
       id: 'result',
-      scrollVh: 25,
+      scrollVh: 12,
       active: flowStage === 'confession_done',
       content: result ? (
         <ResultSection result={result} onSeeAll={handleSeeAll} />
@@ -119,28 +119,28 @@ export default function Home() {
     // Products A (index 11) — entry: Ebook + Desafio
     {
       type: 'section',
-      scrollVh: 90,
+      scrollVh: 65,
       content: <ProductsSection slice="entry" />,
     },
 
     // Products B (index 12) — premium: Curso + Mentorias
     {
       type: 'section',
-      scrollVh: 90,
+      scrollVh: 65,
       content: <ProductsSection slice="premium" />,
     },
 
     // Waitlist (index 13)
     {
       type: 'section',
-      scrollVh: 80,
+      scrollVh: 55,
       content: <WaitlistSection />,
     },
 
     // Social (index 14)
     {
       type: 'section',
-      scrollVh: 60,
+      scrollVh: 45,
       content: <SocialSection />,
     },
   ]

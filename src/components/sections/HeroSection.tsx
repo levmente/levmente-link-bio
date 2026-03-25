@@ -51,7 +51,7 @@ export default function HeroSection({ onNext }: { onNext?: () => void }) {
       <div className="absolute inset-0 pointer-events-none">
         <motion.div
           animate={{ scale: [1, 1.12, 1], opacity: [0.04, 0.07, 0.04] }}
-          transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+          transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut', delay: 1.2 }}
           className="absolute top-[-20%] left-1/2 -translate-x-1/2 w-[500px] h-[500px] rounded-full bg-violet-600 blur-[120px]"
         />
         <motion.div
@@ -118,7 +118,7 @@ export default function HeroSection({ onNext }: { onNext?: () => void }) {
             >
               <motion.span
                 animate={{ y: [0, -3, 0] }}
-                transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+                transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 1.2 }}
                 className="inline-flex items-center gap-1.5 text-xs font-medium text-violet-300 border border-violet-500/30 bg-violet-500/10 rounded-full px-3 py-1"
                 style={{ backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)' }}
               >
@@ -147,14 +147,14 @@ export default function HeroSection({ onNext }: { onNext?: () => void }) {
               {/* Anel orbital lento — dashed */}
               <motion.div
                 animate={{ rotate: 360 }}
-                transition={{ duration: 14, repeat: Infinity, ease: 'linear' }}
+                transition={{ duration: 14, repeat: Infinity, ease: 'linear', delay: 1.2 }}
                 className="absolute inset-[-10px] rounded-full border border-dashed border-violet-500/20 pointer-events-none"
               />
 
               {/* Anel orbital rápido — arco parcial */}
               <motion.div
                 animate={{ rotate: -360 }}
-                transition={{ duration: 5, repeat: Infinity, ease: 'linear' }}
+                transition={{ duration: 5, repeat: Infinity, ease: 'linear', delay: 1.4 }}
                 className="absolute inset-[-18px] rounded-full pointer-events-none"
                 style={{
                   border: '1.5px solid transparent',
@@ -167,7 +167,7 @@ export default function HeroSection({ onNext }: { onNext?: () => void }) {
               <div className="absolute -bottom-9 left-1/2 -translate-x-1/2 flex items-center gap-1.5 whitespace-nowrap">
                 <motion.span
                   animate={{ opacity: [1, 0.3, 1] }}
-                  transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+                  transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut', delay: 1.2 }}
                   className="w-1 h-1 rounded-full bg-emerald-400 shadow-[0_0_4px_rgba(52,211,153,0.8)]"
                 />
                 <span className="text-[0.52rem] font-mono tracking-[0.2em] text-zinc-600 uppercase">sys:online</span>

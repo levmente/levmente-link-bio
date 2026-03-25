@@ -37,9 +37,9 @@ const STEP_Z        = 360
 const PERSP         = 900   // cards — standard depth
 const PERSP_SECTION = 200   // sections — aggressive depth compression (52%→100% growth)
 const X_DRIFT       = 40
-const DEFAULT_CARD_VH    = 80   // vh per card (dwell window)
+const DEFAULT_CARD_VH    = 50   // vh per card (dwell window)
 const DEFAULT_SECTION_VH = 200  // vh per section — fallback only, normally set per-item
-const TRANSITION_VH      = 22   // vh for camera transition between items
+const TRANSITION_VH      = 14   // vh for camera transition between items
 
 // ─── Interactivity thresholds ─────────────────────────────────────────────────
 
@@ -466,13 +466,12 @@ export default function SpatialCardRail({ items, scrollToRef }: Props) {
             opacity: scrollIndicatorOpacity,
             bottom: 'calc(1.5rem + env(safe-area-inset-bottom, 0px))',
           }}
-          className="absolute left-1/2 -translate-x-1/2 pointer-events-none flex flex-col items-center gap-1"
+          className="absolute left-1/2 -translate-x-1/2 pointer-events-none"
         >
-          <span className="text-sm text-white/70 tracking-wide">Role para continuar</span>
           <motion.span
-            animate={{ y: [0, 6, 0] }}
+            animate={{ y: [0, 7, 0] }}
             transition={{ repeat: Infinity, duration: 1.6, ease: 'easeInOut' }}
-            className="text-base text-white/80"
+            className="block text-lg text-white/60"
           >
             ↓
           </motion.span>
