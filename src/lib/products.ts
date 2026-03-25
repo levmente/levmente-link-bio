@@ -19,11 +19,11 @@ export const products: Record<string, Product> = {
       'Um guia direto sobre como o TDAH adulto funciona na prática — e por que nada que você tentou até hoje foi feito pra você.',
     forWhom: 'Ideal para quem está no começo da jornada e quer entender o que está acontecendo.',
     cta: 'Quero finalmente entender meu cérebro',
-    href: '#', // TODO: colar URL da página de vendas / checkout do e-book
+    href: 'https://levmente.github.io/teste-mental',
     tier: 1,
     badge: 'Entrada',
     productType: 'entry',
-    linkType: 'checkout',
+    linkType: 'checkout', // checkout → abre na mesma aba
   },
 
   desafio: {
@@ -34,7 +34,7 @@ export const products: Record<string, Product> = {
       'Um processo guiado, dia a dia, que constrói consistência sem depender de força de vontade. Feito para quem começa e não termina.',
     forWhom: 'Para quem já entende o TDAH mas precisa criar movimento e sair do loop de inação.',
     cta: 'Quero sair do travamento na prática',
-    href: '#', // TODO: colar URL da página de vendas do Desafio 21 Dias
+    href: 'https://levmente.github.io/desafio21/',
     tier: 2,
     badge: 'Prática',
     productType: 'mid',
@@ -49,7 +49,7 @@ export const products: Record<string, Product> = {
       'Execução, organização, foco, autoconhecimento — tudo integrado num método que respeita como a sua mente funciona. Não é mais conteúdo. É transformação.',
     forWhom: 'Para quem quer parar de sobreviver e começar a operar no próprio potencial.',
     cta: 'Quero destravar de verdade',
-    href: '#', // TODO: colar URL da página de vendas do curso Destravando TDAH
+    href: 'https://levmente.github.io/destravando-tdah/',
     tier: 3,
     badge: 'Transformação',
     productType: 'mid',
@@ -63,12 +63,12 @@ export const products: Record<string, Product> = {
     description:
       'Sessões ao vivo comigo, comunidade de pessoas que entendem o que você vive, e acompanhamento real. O TDAH é mais fácil quando você tem as pessoas certas do lado.',
     forWhom: 'Para quem quer suporte contínuo e um lugar onde finalmente se sente entendido.',
-    cta: 'Quero ajuda pra aplicar isso na minha vida',
-    href: '#', // TODO: colar link do WhatsApp ou formulário de aplicação da mentoria em grupo
+    cta: 'Seleção Mentoria em Grupo (Aplicação)',
+    href: 'https://docs.google.com/forms/d/e/1FAIpQLSf10X0mCoXaoyBVIAe2H5_dEwt0eUTXYK42xnGNfQALGl01Vg/viewform?usp=dialog',
     tier: 4,
     badge: 'Comunidade',
     productType: 'high-ticket',
-    linkType: 'whatsapp', // trocar para 'application' se usar formulário
+    linkType: 'application',
   },
 
   'mentoria-individual': {
@@ -78,12 +78,12 @@ export const products: Record<string, Product> = {
     description:
       'Trabalho direto com você, mergulhando nos seus bloqueios específicos. Para quem já tentou de tudo e sabe que precisa de alguém que olhe de verdade pro seu caso.',
     forWhom: 'Para quem está pronto para o nível mais profundo de transformação.',
-    cta: 'Quero alguém olhando o meu caso de perto',
-    href: '#', // TODO: colar link do WhatsApp ou formulário de aplicação da mentoria individual
+    cta: 'Seleção Mentoria Individual (Vagas Limitadas)',
+    href: 'https://docs.google.com/forms/d/e/1FAIpQLSdcOUUne8NLybPkdnbls7Ql9YjylwPecVsdfJWcIVAUiyb1SA/viewform?usp=publish-editor',
     tier: 5,
     badge: 'Premium',
     productType: 'high-ticket',
-    linkType: 'whatsapp', // trocar para 'application' se usar formulário
+    linkType: 'application',
   },
 }
 
