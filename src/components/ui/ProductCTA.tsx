@@ -25,6 +25,8 @@ export default function ProductCTA({
 
   const isComingSoon = product.href === COMING_SOON
   const isConsultive = product.linkType === 'whatsapp' || product.linkType === 'application'
+  // External links open in new tab, except checkout (ebook stays in same tab)
+  const openNewTab = product.href.startsWith('http') && product.linkType !== 'checkout'
 
   const base =
     'relative inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-xs font-semibold transition-all duration-200 cursor-pointer select-none'
@@ -56,8 +58,8 @@ export default function ProductCTA({
     return (
       <motion.a
         href={product.href}
-        target={isConsultive ? '_blank' : undefined}
-        rel={isConsultive ? 'noopener noreferrer' : undefined}
+        target={openNewTab ? '_blank' : undefined}
+        rel={openNewTab ? 'noopener noreferrer' : undefined}
         onClick={handleClick}
         className={`${base} ${variantClass[variant]} ${className}`}
         whileHover={{ scale: 1.02 }}
