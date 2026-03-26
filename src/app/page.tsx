@@ -11,15 +11,14 @@ import HeroSection from '@/components/sections/HeroSection'
 import DiagnosticSection from '@/components/sections/DiagnosticSection'
 import { makePainItems } from '@/components/sections/PainSection'
 
-const ConfessionSection = dynamic(() => import('@/components/sections/ConfessionSection'))
-const ResultSection     = dynamic(() => import('@/components/sections/ResultSection'))
-const ProductsSection   = dynamic(() => import('@/components/sections/ProductsSection'))
-const WaitlistSection   = dynamic(() => import('@/components/sections/WaitlistSection'))
-const SocialSection     = dynamic(() => import('@/components/sections/SocialSection'))
+const ResultSection   = dynamic(() => import('@/components/sections/ResultSection'))
+const ProductsSection = dynamic(() => import('@/components/sections/ProductsSection'))
+const WaitlistSection = dynamic(() => import('@/components/sections/WaitlistSection'))
+const SocialSection   = dynamic(() => import('@/components/sections/SocialSection'))
 
 // ─── Flow state ───────────────────────────────────────────────────────────────
 
-type FlowStage = 'idle' | 'diagnostic_done' | 'confession_done'
+type FlowStage = 'idle' | 'diagnostic_done'
 
 // ─── Item indices ─────────────────────────────────────────────────────────────
 //
@@ -27,23 +26,20 @@ type FlowStage = 'idle' | 'diagnostic_done' | 'confession_done'
 //  1-6  pain cards (O ciclo … isRevelation)
 //  7    pain conclusion ("Isso não é falta de caráter")
 //  8    diagnostic
-//  9    confession   (A1: active when flowStage !== 'idle')
-//  10   result       (A1: active when flowStage === 'confession_done')
-//  11   products A   — entry (Ebook + Desafio)
-//  12   products B   — premium (Curso + Mentorias)
-//  13   waitlist
-//  14   social
+//  9    result       (A1: active when flowStage === 'diagnostic_done')
+//  10   products A   — entry (Ebook + Desafio)
+//  11   products B   — premium (Curso + Mentorias)
+//  12   waitlist
+//  13   social
 
-const IDX_FIRST_PAIN = 1   // hero CTA → first pain card
+const IDX_FIRST_PAIN = 1
 const IDX_DIAGNOSTIC = 8
-const IDX_CONFESSION = 9
-const IDX_RESULT     = 10
-const IDX_PRODUCTS   = 11
+const IDX_RESULT     = 9
+const IDX_PRODUCTS   = 10
 
 export default function Home() {
   const [flowStage, setFlowStage]             = useState<FlowStage>('idle')
-  const [diagnosticState, setDiagnosticState] = useState<DiagnosticState | null>(null)
-  const [result, setResult]                   = useState<DiagnosticResult | null>(null)
+  const [result, setResult] = useState<DiagnosticResult | null>(null)
 
   const scrollToRef = useRef<((index: number) => void) | null>(null)
 
@@ -55,15 +51,9 @@ export default function Home() {
 
   const handleDiagnosticComplete = (state: DiagnosticState) => {
     const r = getResult(state)
-    setDiagnosticState(state)
     setResult(r)
     setFlowStage('diagnostic_done')
-    setTimeout(() => scrollToRef.current?.(IDX_CONFESSION), 150)
-  }
-
-  const handleConfessionDone = () => {
-    setFlowStage('confession_done')
-    setTimeout(() => scrollToRef.current?.(IDX_RESULT), 100)
+    setTimeout(() => scrollToRef.current?.(IDX_RESULT), 150)
   }
 
   const handleSeeAll = () => {
@@ -92,25 +82,12 @@ export default function Home() {
       content: <DiagnosticSection onComplete={handleDiagnosticComplete} />,
     },
 
-    // Confession (index 9) — A1: invisible until diagnostic done — fast lane
-    {
-      type: 'section',
-      scrollVh: 6,
-      active: flowStage !== 'idle',
-      content: diagnosticState ? (
-        <ConfessionSection
-          diagnosticState={diagnosticState}
-          onContinue={handleConfessionDone}
-        />
-      ) : null,
-    },
-
-    // Result (index 10) — A1: invisible until confession done — fast lane
+    // Result (index 9) — A1: invisible until diagnostic done — fast lane
     {
       type: 'section',
       id: 'result',
       scrollVh: 12,
-      active: flowStage === 'confession_done',
+      active: flowStage === 'diagnostic_done',
       content: result ? (
         <ResultSection result={result} onSeeAll={handleSeeAll} />
       ) : null,
