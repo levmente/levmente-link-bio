@@ -53,7 +53,7 @@ export function makePainItems(onNext: () => void): RailItem[] {
     ...painCards,
     {
       type: 'section' as const,
-      scrollVh: 25,
+      scrollVh: 38,
       content: (
         <div className="w-full max-w-sm mx-auto px-6 flex flex-col items-center gap-5 text-center">
 

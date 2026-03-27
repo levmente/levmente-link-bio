@@ -124,7 +124,7 @@ export default function Home() {
     // Hero (index 0)
     {
       type: 'section',
-      scrollVh: 20,
+      scrollVh: 30,
       content: <HeroSection onNext={() => scrollToRef.current?.(IDX_FIRST_PAIN)} />,
     },
 
@@ -135,7 +135,7 @@ export default function Home() {
     {
       type: 'section',
       id: 'diagnostic',
-      scrollVh: 40,
+      scrollVh: 55,
       content: <DiagnosticSection onComplete={handleDiagnosticComplete} />,
     },
 
@@ -143,7 +143,7 @@ export default function Home() {
     {
       type: 'section',
       id: 'result',
-      scrollVh: 25,
+      scrollVh: 38,
       active: flowStage === 'diagnostic_done',
       content: result ? (
         <ResultSection result={result} onSeeAll={handleSeeAll} />
@@ -153,28 +153,28 @@ export default function Home() {
     // Products A (index 10) — entry: Ebook + Desafio
     {
       type: 'section',
-      scrollVh: 38,
+      scrollVh: 55,
       content: <ProductsSection slice="entry" />,
     },
 
     // Products B (index 11) — premium: Curso + Mentorias
     {
       type: 'section',
-      scrollVh: 38,
+      scrollVh: 55,
       content: <ProductsSection slice="premium" />,
     },
 
     // Waitlist (index 12)
     {
       type: 'section',
-      scrollVh: 32,
+      scrollVh: 45,
       content: <WaitlistSection />,
     },
 
     // Social (index 13)
     {
       type: 'section',
-      scrollVh: 22,
+      scrollVh: 30,
       content: <SocialSection />,
     },
   ]
