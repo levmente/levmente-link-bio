@@ -46,7 +46,7 @@ export default function WaitlistSection() {
   }
 
   return (
-    <section className="w-full max-w-md mx-auto px-4 py-6">
+    <section id="waitlist" className="w-full max-w-md mx-auto px-4 py-6">
       <div className="relative rounded-2xl border border-violet-500/25 overflow-hidden">
         {/* ── Corner brackets ────────────────────────────────────────────── */}
         <div className="absolute top-0 left-0 w-5 h-5 border-t-2 border-l-2 border-violet-400/50 rounded-tl-2xl pointer-events-none" />

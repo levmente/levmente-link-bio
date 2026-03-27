@@ -48,9 +48,9 @@ export default function DiagnosticSection({ onComplete }: DiagnosticSectionProps
     setState(next)
     trackDiagnosticStepAnswered({
       step: 1,
-      question: 'O que mais te trava?',
-      value: pain,
-      label: painLabels[pain],
+      question_id: 'pain',
+      answer_value: pain,
+      answer_label: painLabels[pain],
     })
     setTimeout(() => setStep(1), 300)
   }
@@ -60,9 +60,9 @@ export default function DiagnosticSection({ onComplete }: DiagnosticSectionProps
     setState(next)
     trackDiagnosticStepAnswered({
       step: 2,
-      question: 'Onde isso aparece mais na sua vida?',
-      value: life,
-      label: lifeLabels[life],
+      question_id: 'life',
+      answer_value: life,
+      answer_label: lifeLabels[life],
     })
     setTimeout(() => setStep(2), 300)
   }
@@ -72,9 +72,9 @@ export default function DiagnosticSection({ onComplete }: DiagnosticSectionProps
     setState(final)
     trackDiagnosticStepAnswered({
       step: 3,
-      question: 'Onde você está agora?',
-      value: stage,
-      label: stageLabels[stage],
+      question_id: 'stage',
+      answer_value: stage,
+      answer_label: stageLabels[stage],
     })
     trackDiagnosticCompleted({
       pain: final.pain ?? '',

@@ -42,6 +42,7 @@ export default function HeroSection({ onNext }: { onNext?: () => void }) {
 
   return (
     <section
+      id="hero"
       className="relative h-full w-full flex flex-col items-center justify-center px-4 pt-12 pb-16"
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}

@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { DiagnosticState, DiagnosticResult } from '@/lib/types'
 import { getResult } from '@/lib/diagnostic'
-import { trackPageEntered } from '@/lib/analytics'
+import { trackPageViewed, trackScrollDepth, trackSectionViewed } from '@/lib/analytics'
 
 import dynamic from 'next/dynamic'
 import SpatialCardRail, { RailItem } from '@/components/ui/SpatialCardRail'
@@ -43,8 +43,65 @@ export default function Home() {
 
   const scrollToRef = useRef<((index: number) => void) | null>(null)
 
+  // ── Tracking: page viewed ─────────────────────────────────────────────────
   useEffect(() => {
-    trackPageEntered()
+    trackPageViewed()
+  }, [])
+
+  // ── Tracking: scroll depth ────────────────────────────────────────────────
+  useEffect(() => {
+    const fired = new Set<number>()
+    const thresholds = [25, 50, 75, 90] as const
+
+    const handleScroll = () => {
+      const scrolled = window.scrollY
+      const total = document.documentElement.scrollHeight - window.innerHeight
+      if (total <= 0) return
+      const pct = (scrolled / total) * 100
+
+      for (const t of thresholds) {
+        if (!fired.has(t) && pct >= t) {
+          fired.add(t)
+          trackScrollDepth(t)
+        }
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  // ── Tracking: section viewed ──────────────────────────────────────────────
+  useEffect(() => {
+    const sectionIds = ['hero', 'diagnostic', 'result', 'products-entry', 'products-premium', 'waitlist']
+    const observed = new Set<string>()
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          const id = entry.target.getAttribute('id')
+          if (id && entry.isIntersecting && !observed.has(id)) {
+            observed.add(id)
+            trackSectionViewed(id)
+          }
+        }
+      },
+      { threshold: 0.3 }
+    )
+
+    const attach = () => {
+      for (const id of sectionIds) {
+        const el = document.getElementById(id)
+        if (el) observer.observe(el)
+      }
+    }
+
+    // Pequeno delay para garantir que o DOM já montou as seções dinâmicas
+    const timer = setTimeout(attach, 600)
+    return () => {
+      clearTimeout(timer)
+      observer.disconnect()
+    }
   }, [])
 
   // ── Flow handlers ─────────────────────────────────────────────────────────
@@ -64,10 +121,10 @@ export default function Home() {
 
   const railItems: RailItem[] = [
 
-    // Hero (index 0) — scrollVh: 10 → câmera começa a avançar em ~10vh (sem zona morta)
+    // Hero (index 0)
     {
       type: 'section',
-      scrollVh: 10,
+      scrollVh: 20,
       content: <HeroSection onNext={() => scrollToRef.current?.(IDX_FIRST_PAIN)} />,
     },
 
@@ -78,7 +135,7 @@ export default function Home() {
     {
       type: 'section',
       id: 'diagnostic',
-      scrollVh: 25,
+      scrollVh: 40,
       content: <DiagnosticSection onComplete={handleDiagnosticComplete} />,
     },
 
@@ -86,38 +143,38 @@ export default function Home() {
     {
       type: 'section',
       id: 'result',
-      scrollVh: 12,
+      scrollVh: 25,
       active: flowStage === 'diagnostic_done',
       content: result ? (
         <ResultSection result={result} onSeeAll={handleSeeAll} />
       ) : null,
     },
 
-    // Products A (index 11) — entry: Ebook + Desafio
+    // Products A (index 10) — entry: Ebook + Desafio
     {
       type: 'section',
-      scrollVh: 25,
+      scrollVh: 38,
       content: <ProductsSection slice="entry" />,
     },
 
-    // Products B (index 12) — premium: Curso + Mentorias
+    // Products B (index 11) — premium: Curso + Mentorias
     {
       type: 'section',
-      scrollVh: 25,
+      scrollVh: 38,
       content: <ProductsSection slice="premium" />,
     },
 
-    // Waitlist (index 13)
+    // Waitlist (index 12)
     {
       type: 'section',
-      scrollVh: 25,
+      scrollVh: 32,
       content: <WaitlistSection />,
     },
 
-    // Social (index 14)
+    // Social (index 13)
     {
       type: 'section',
-      scrollVh: 18,
+      scrollVh: 22,
       content: <SocialSection />,
     },
   ]

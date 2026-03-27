@@ -4,7 +4,7 @@ import { useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { DiagnosticResult } from '@/lib/types'
 import { Sparkles } from 'lucide-react'
-import { trackResultViewed, trackTrailLinkClicked } from '@/lib/analytics'
+import { trackResultViewed, trackTrailLinkClicked, normalizeProductId } from '@/lib/analytics'
 import ProductCTA from '@/components/ui/ProductCTA'
 
 type ResultSectionProps = {
@@ -15,9 +15,9 @@ type ResultSectionProps = {
 export default function ResultSection({ result, onSeeAll }: ResultSectionProps) {
   useEffect(() => {
     trackResultViewed({
-      recommended_product_id: result.primary.id,
-      recommended_product_name: result.primary.name,
-      result_headline: result.headline,
+      result_type:       normalizeProductId(result.primary.id),
+      result_title:      result.headline,
+      secondary_product: result.secondary ? normalizeProductId(result.secondary.id) : undefined,
     })
   }, [result])
   return (
@@ -81,6 +81,7 @@ export default function ResultSection({ result, onSeeAll }: ResultSectionProps) 
           source="result_primary"
           variant="primary"
           className="w-full py-3.5 text-sm"
+          resultType={normalizeProductId(result.primary.id)}
         />
       </motion.div>
 
@@ -103,6 +104,7 @@ export default function ResultSection({ result, onSeeAll }: ResultSectionProps) 
               source="result_secondary"
               variant="secondary"
               className="flex-shrink-0 py-2 px-4"
+              resultType={normalizeProductId(result.primary.id)}
             />
           </div>
         </motion.div>

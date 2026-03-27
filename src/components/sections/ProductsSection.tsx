@@ -84,7 +84,7 @@ export default function ProductsSection({ slice = 'entry' }: Props) {
   const products = productsList.slice(...cfg.range)
 
   return (
-    <section className="w-full max-w-[420px] mx-auto px-4 py-3">
+    <section id={`products-${slice}`} className="w-full max-w-[420px] mx-auto px-4 py-3">
 
       {/* Header */}
       <div className="text-center mb-4">

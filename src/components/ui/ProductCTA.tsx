@@ -4,13 +4,20 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowRight, MessageCircle, Clock } from 'lucide-react'
 import { Product } from '@/lib/types'
-import { trackProductCtaClicked, ProductSource } from '@/lib/analytics'
+import {
+  trackProductCtaClicked,
+  buildOutboundUrl,
+  normalizeProductId,
+  ProductSource,
+} from '@/lib/analytics'
 
 type ProductCTAProps = {
   product: Product
   source: ProductSource
   variant?: 'primary' | 'secondary'
   className?: string
+  /** ID do produto recomendado pelo diagnóstico (para rastrear result_type em CTAs de resultado). */
+  resultType?: string
 }
 
 const COMING_SOON = '#'
@@ -20,6 +27,7 @@ export default function ProductCTA({
   source,
   variant = 'secondary',
   className = '',
+  resultType,
 }: ProductCTAProps) {
   const [feedback, setFeedback] = useState(false)
 
@@ -27,6 +35,9 @@ export default function ProductCTA({
   const isConsultive = product.linkType === 'whatsapp' || product.linkType === 'application'
   // External links open in new tab, except checkout (ebook stays in same tab)
   const openNewTab = product.href.startsWith('http') && product.linkType !== 'checkout'
+
+  // URL com parâmetros de rastreamento mesclados
+  const outboundUrl = isComingSoon ? COMING_SOON : buildOutboundUrl(product.href)
 
   const base =
     'relative inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-xs font-semibold transition-all duration-200 cursor-pointer select-none'
@@ -45,11 +56,13 @@ export default function ProductCTA({
       return
     }
     trackProductCtaClicked({
-      product_id: product.id,
-      product_name: product.name,
-      product_type: product.productType,
-      link_type: product.linkType,
-      source,
+      destination_product: normalizeProductId(product.id),
+      destination_url:     outboundUrl,
+      button_text:         product.cta,
+      result_type:         resultType,
+      position_on_page:    source,
+      product_type:        product.productType,
+      link_type:           product.linkType,
     })
   }
 
@@ -57,7 +70,7 @@ export default function ProductCTA({
   if (!isComingSoon) {
     return (
       <motion.a
-        href={product.href}
+        href={outboundUrl}
         target={openNewTab ? '_blank' : undefined}
         rel={openNewTab ? 'noopener noreferrer' : undefined}
         onClick={handleClick}
